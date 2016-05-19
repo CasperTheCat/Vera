@@ -278,10 +278,11 @@ void laserMelt(unsigned char*data, uint8_t fType, uint32_t sX, uint32_t sY, bool
 	// Allocate second buffer for image!
 	unsigned char *result = new unsigned char[sX * sY * 3];
 
-#ifdef __ICC
+#ifndef __ICC
 	cilk_for(uint64_t i = 0; i < sX * sY; i++)
 #else
 	// OMP
+#pragma omp parallel for
 	for (uint64_t i = 0; i < sX * sY; i++)
 #endif
 	{
