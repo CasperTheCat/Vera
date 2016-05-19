@@ -63,7 +63,6 @@ int main(int argc, char **argv)
 	}
 
     // Dump Data
-    cout << pFile.string() << "\t" << argc << "\t" << filterType << endl;
 	cout << (laserBeam(pFile, filterType,bColourise) ? "High" : "Low") << endl;
 
 

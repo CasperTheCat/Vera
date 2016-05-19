@@ -63,7 +63,7 @@ bool laserBeam(boost::filesystem::path _path, eFilterTypes fType, bool bColor)
 
 			laserMelt(writeBuffer.data, i, frameBuffer.cols, frameBuffer.rows, bColor);
 
-			cv::imwrite(frameName + getFilterName(i) + ".png", writeBuffer);
+			cv::imwrite(frameName + getFilterName(i) + (bColor ? "" : "Mask") + ".png", writeBuffer);
 		}
 	}
 	else
