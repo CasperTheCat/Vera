@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(RocketBunny)
+project(Vera)
 
 set(Boost_USE_STATIC_LIBS TRUE)
 set(Boost_USE_MULTITHREADED TRUE)
@@ -11,12 +11,12 @@ FIND_PACKAGE(OpenCV REQUIRED)
 FIND_PACKAGE(Boost COMPONENTS system filesystem REQUIRED)
 
 set(SOURCE_FILES
-        main.cpp rocket.cpp rocket.h)
+        main.cpp laser.cpp laser.h)
 
 include_directories(
         ${Boost_INCLUDE_DIRS}
         ${OpenCV_INCLUDE_DIRS}
 )
 
-add_executable(RocketBunny ${SOURCE_FILES})
-TARGET_LINK_LIBRARIES( RocketBunny ${OpenCV_LIBS} ${Boost_LIBRARIES})
+add_executable(Vera ${SOURCE_FILES})
+TARGET_LINK_LIBRARIES( Vera ${OpenCV_LIBS} ${Boost_LIBRARIES})
