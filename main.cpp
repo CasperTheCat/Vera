@@ -34,29 +34,37 @@ int main(int argc, char **argv)
     eFilterTypes filterType = VeraFilterLaplace;
     boost::filesystem::path pFile(argv[argc - 1]); // Last file!
     if (!exists(pFile)) return 130;
+	bool bColourise = false;
+
 
     // Parse any args
     for (int i = 1; i < argc; i++)
     {
-
+		if (!strcmp(argv[i], "-c"))
+		{
+			bColourise = true;
+		}
         if (!strcmp(argv[i], "-s"))
         {
             filterType = VeraFilterSobel;
         }
-    }
+		if (!strcmp(argv[i], "-wl"))
+		{
+			filterType = VeraFilterWideLaplace;
+		}
+		if (!strcmp(argv[i], "-l"))
+		{
+			filterType = VeraFilterLaplace;
+		}
+		if (!strcmp(argv[i], "-all"))
+		{
+			filterType = VeraFilterAll;
+		}
+	}
 
     // Dump Data
     cout << pFile.string() << "\t" << argc << "\t" << filterType << endl;
-
-    if ()
-    {
-        // Blast
-        cout << (laserBeam(pFile, filterType) ? "High" : "Low") << endl;
-    }
-    else
-    {
-        cout << "Something bad happened!" << endl;
-    }
+	cout << (laserBeam(pFile, filterType,bColourise) ? "High" : "Low") << endl;
 
 
     return 0;

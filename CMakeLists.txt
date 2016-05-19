@@ -11,7 +11,7 @@ FIND_PACKAGE(OpenCV REQUIRED)
 FIND_PACKAGE(Boost COMPONENTS system filesystem REQUIRED)
 
 set(SOURCE_FILES
-        main.cpp laser.cpp laser.h)
+        main.cpp laser.cpp laser.h types.h)
 
 include_directories(
         ${Boost_INCLUDE_DIRS}
