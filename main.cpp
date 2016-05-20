@@ -32,38 +32,61 @@ int main(int argc, char **argv)
 
     // Declare variables out of scope
     eFilterTypes filterType = VeraFilterLaplace;
-    boost::filesystem::path pFile(argv[argc - 1]); // Last file!
+    boost::filesystem::path pFile(argv[argc - 1]); // Last file always!
+	boost::filesystem::path pMask; // Scope it here
     if (!exists(pFile)) return 130;
 	bool bColourise = false;
+	bool bApplyMask = false;
 
 
     // Parse any args
     for (int i = 1; i < argc; i++)
     {
+		if (!strcmp(argv[i], "-a"))
+		{
+			if (argc < 4)
+			{
+				std::cout << "Not enough arguments to apply a mask" << std::endl;
+				return 130;
+			}
+			
+			bApplyMask= true;
+			pMask = argv[i + 1];
+			break;
+		}
+
 		if (!strcmp(argv[i], "-c"))
 		{
 			bColourise = true;
 		}
+
         if (!strcmp(argv[i], "-s"))
         {
             filterType = VeraFilterSobel;
         }
-		if (!strcmp(argv[i], "-wl"))
+		else if (!strcmp(argv[i], "-wl"))
 		{
 			filterType = VeraFilterWideLaplace;
 		}
-		if (!strcmp(argv[i], "-l"))
+		else if (!strcmp(argv[i], "-l"))
 		{
 			filterType = VeraFilterLaplace;
 		}
-		if (!strcmp(argv[i], "-all"))
+		else if (!strcmp(argv[i], "-all"))
 		{
 			filterType = VeraFilterAll;
 		}
 	}
 
-    // Dump Data
-	cout << (laserBeam(pFile, filterType,bColourise) ? "High" : "Low") << endl;
+    // Gen mask or sew
+	if (bApplyMask)
+	{
+		cout << (laserSew(pFile, pMask) ? "Success" : "Failure") << endl;
+	}
+	else
+	{
+		cout << (laserBeam(pFile, filterType, bColourise) ? "Success" : "Failure") << endl;
+	}
 
 
     return 0;

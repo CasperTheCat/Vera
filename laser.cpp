@@ -339,3 +339,59 @@ void laserMelt(unsigned char*data, uint8_t fType, uint32_t sX, uint32_t sY, bool
 	memcpy(data, result, sX * sY * 3);
 	delete result;
 }
+
+void laserStitch(unsigned char*data, unsigned char*mask, uint32_t sX, uint32_t sY)
+{
+	auto result = new unsigned char[sX * sY * 3];
+
+#ifdef __ICC
+	cilk_for(uint64_t i = 0; i < sX * sY; i++)
+#else
+#ifdef __GNUC__
+#pragma omp parallel for
+	for (uint64_t i = 0; i < sX * sY; i++)
+#else
+#pragma omp parallel for
+	for (signed long long i = 0; i < sX * sY; i++)
+#endif
+#endif
+	{
+		// So we need to filter and greyscaleb
+		// temporary invert!
+		float3 cLocal;
+		cLocal.x = PTF(data[3 * i]);
+		cLocal.y = PTF(data[3 * i + 1]);
+		cLocal.z = PTF(data[3 * i + 2]);
+
+		cLocal = lerp(cLocal, make_float3(0, 0, 0), PTF(mask[3 * i + 1]));
+
+		result[i * 3 + 0] = FTP(cLocal.x);
+		result[i * 3 + 1] = FTP(cLocal.y);
+		result[i * 3 + 2] = FTP(cLocal.z);
+	}
+
+
+	memcpy(data, result, sX * sY * 3);
+	delete result;
+}
+
+bool laserSew(boost::filesystem::path _path, boost::filesystem::path _mask)
+{
+	// Make a video capture
+	//std::cout << "chk" << _path.string() << std::endl;
+
+	cv::Mat frameBuffer;
+	cv::Mat maskBuffer;
+
+	frameBuffer = cv::imread(_path.string()); // Read Image
+	if (frameBuffer.empty()) return false;
+	maskBuffer = cv::imread(_mask.string()); // Read Image
+	if (maskBuffer.empty()) return false;
+
+	std::string frameName = _path.string().substr(0, _path.string().length() - 4);
+
+	laserStitch(frameBuffer.data, maskBuffer.data, frameBuffer.cols, frameBuffer.rows);
+
+	cv::imwrite(frameName + "Masked.png", frameBuffer);
+	return true;
+}

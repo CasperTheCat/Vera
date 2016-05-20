@@ -33,5 +33,6 @@ enum eFilterTypes
 
 bool laserBeam(boost::filesystem::path _path, eFilterTypes fType, bool bColor);
 void laserMelt(unsigned char* data, uint8_t fType, uint32_t sX, uint32_t sY, bool bColor);
+bool laserSew(boost::filesystem::path _path, boost::filesystem::path _mask);
 
 #endif //VERA_LASER_H
