@@ -78,42 +78,42 @@ bool laserBeam(boost::filesystem::path _path, eFilterTypes fType, bool bColor)
 
 float sobelHorz(unsigned char* in, uint64_t idx, uint32_t pX, uint32_t pY)
 {
-	float n1 = -1 * dot(
+	float n1 = -1 * fdot(
 		float3{
 		PTF(in[Modulus(((idx * 3) + 0) - 3 - pX * 3, pX * pY * 3)]), // R
 		PTF(in[Modulus(((idx * 3) + 1) - 3 - pX * 3, pX * pY * 3)]), // G
 		PTF(in[Modulus(((idx * 3) + 2) - 3 - pX * 3, pX * pY * 3)])  // B
 	}, RGB_LUMA);
 
-	float n2 = -2 * dot(
+	float n2 = -2 * fdot(
 		float3{
 		PTF(in[Modulus(((idx * 3) + 0) - pX * 3, pX * pY * 3)]), // R
 		PTF(in[Modulus(((idx * 3) + 1) - pX * 3, pX * pY * 3)]), // G
 		PTF(in[Modulus(((idx * 3) + 2) - pX * 3, pX * pY * 3)])  // B
 	}, RGB_LUMA);
 
-	float n3 = -1 * dot(
+	float n3 = -1 * fdot(
 		float3{
 		PTF(in[Modulus(((idx * 3) + 0) + 3 - (pX * 3), pX * pY * 3)]), // R
 		PTF(in[Modulus(((idx * 3) + 1) + 3 - (pX * 3), pX * pY * 3)]), // G
 		PTF(in[Modulus(((idx * 3) + 2) + 3 - (pX * 3), pX * pY * 3)])  // B
 	}, RGB_LUMA);
 
-	float p1 = dot(
+	float p1 = fdot(
 		float3{
 		PTF(in[Modulus(((idx * 3) + 0) - 3 + pX * 3, pX * pY * 3)]), // R
 		PTF(in[Modulus(((idx * 3) + 1) - 3 + pX * 3, pX * pY * 3)]), // G
 		PTF(in[Modulus(((idx * 3) + 2) - 3 + pX * 3, pX * pY * 3)])  // B
 	}, RGB_LUMA);
 
-	float p2 = 2 * dot(
+	float p2 = 2 * fdot(
 		float3{
 		PTF(in[Modulus(((idx * 3) + 0) + pX * 3, pX * pY * 3)]), // R
 		PTF(in[Modulus(((idx * 3) + 1) + pX * 3, pX * pY * 3)]), // G
 		PTF(in[Modulus(((idx * 3) + 2) + pX * 3, pX * pY * 3)])  // B
 	}, RGB_LUMA);
 
-	float p3 = dot(
+	float p3 = fdot(
 		float3{
 		PTF(in[Modulus(((idx * 3) + 0) + 3 + (pX * 3), pX * pY * 3)]), // R
 		PTF(in[Modulus(((idx * 3) + 1) + 3 + (pX * 3), pX * pY * 3)]), // G
@@ -126,42 +126,42 @@ float sobelHorz(unsigned char* in, uint64_t idx, uint32_t pX, uint32_t pY)
 
 float sobelVert(unsigned char* in, uint64_t idx, uint32_t pX, uint32_t pY)
 {
-	float n1 = -1 * dot(
+	float n1 = -1 * fdot(
 		float3{
 		PTF(in[Modulus(((idx * 3) + 0) - 3 - pX * 3, pX * pY * 3)]), // R
 		PTF(in[Modulus(((idx * 3) + 1) - 3 - pX * 3, pX * pY * 3)]), // G
 		PTF(in[Modulus(((idx * 3) + 2) - 3 - pX * 3, pX * pY * 3)])  // B
 	}, RGB_LUMA);
 
-	float n2 = -2 * dot(
+	float n2 = -2 * fdot(
 		float3{
 		PTF(in[Modulus(((idx * 3) + 0) - 3, pX * pY * 3)]), // R
 		PTF(in[Modulus(((idx * 3) + 1) - 3, pX * pY * 3)]), // G
 		PTF(in[Modulus(((idx * 3) + 2) - 3, pX * pY * 3)])  // B
 	}, RGB_LUMA);
 
-	float n3 = -1 * dot(
+	float n3 = -1 * fdot(
 		float3{
 		PTF(in[Modulus(((idx * 3) + 0) - 3 + (pX * 3), pX * pY * 3)]), // R
 		PTF(in[Modulus(((idx * 3) + 1) - 3 + (pX * 3), pX * pY * 3)]), // G
 		PTF(in[Modulus(((idx * 3) + 2) - 3 + (pX * 3), pX * pY * 3)])  // B
 	}, RGB_LUMA);
 
-	float p1 = dot(
+	float p1 = fdot(
 		float3{
 		PTF(in[Modulus(((idx * 3) + 0) + 3 - pX * 3, pX * pY * 3)]), // R
 		PTF(in[Modulus(((idx * 3) + 1) + 3 - pX * 3, pX * pY * 3)]), // G
 		PTF(in[Modulus(((idx * 3) + 2) + 3 - pX * 3, pX * pY * 3)])  // B
 	}, RGB_LUMA);
 
-	float p2 = 2 * dot(
+	float p2 = 2 * fdot(
 		float3{
 		PTF(in[Modulus(((idx * 3) + 0) + 3, pX * pY * 3)]), // R
 		PTF(in[Modulus(((idx * 3) + 1) + 3, pX * pY * 3)]), // G
 		PTF(in[Modulus(((idx * 3) + 2) + 3, pX * pY * 3)])  // B
 	}, RGB_LUMA);
 
-	float p3 = dot(
+	float p3 = fdot(
 		float3{
 		PTF(in[Modulus(((idx * 3) + 0) + 3 + (pX * 3), pX * pY * 3)]), // R
 		PTF(in[Modulus(((idx * 3) + 1) + 3 + (pX * 3), pX * pY * 3)]), // G
@@ -237,7 +237,7 @@ float fWideLaplacian(unsigned char* cIn, float3 cLocal, uint64_t gIdx, uint32_t 
 
 		- 16 * cLocal.z;
 
-	return dot(tempLap, RGB_LUMA);
+	return fdot(tempLap, RGB_LUMA);
 }
 
 float fLaplacian(unsigned char* cIn, float3 cLocal, uint64_t gIdx, uint32_t pX, uint32_t pY)
@@ -262,7 +262,7 @@ float fLaplacian(unsigned char* cIn, float3 cLocal, uint64_t gIdx, uint32_t pX, 
 		+ PTF(cIn[Modulus(((gIdx * 3) + 2) + 3, pX * pY * 3)])) // Right
 		- 4 * cLocal.z;
 
-	return dot(tempLap, RGB_LUMA);
+	return fdot(tempLap, RGB_LUMA);
 }
 
 
@@ -276,20 +276,24 @@ float fLaplacian(unsigned char* cIn, float3 cLocal, uint64_t gIdx, uint32_t pX, 
 void laserMelt(unsigned char*data, uint8_t fType, uint32_t sX, uint32_t sY, bool bColor)
 {
 	// Allocate second buffer for image!
-	unsigned char *result = new unsigned char[sX * sY * 3];
+	auto result = new unsigned char[sX * sY * 3];
 
-#ifndef __ICC
+#ifdef __ICC
 	cilk_for(uint64_t i = 0; i < sX * sY; i++)
 #else
-	// OMP
+#ifdef __GNUC__
 #pragma omp parallel for
 	for (uint64_t i = 0; i < sX * sY; i++)
+#else
+#pragma omp parallel for
+	for (signed long long i = 0; i < sX * sY; i++)
+#endif
 #endif
 	{
 		// So we need to filter and greyscaleb
 		// temporary invert!
 		float3 cLocal;
-		float filter = 1;
+		float filter = 1.f;
 		cLocal.x = PTF(data[3 * i]);
 		cLocal.y = PTF(data[3 * i + 1]);
 		cLocal.z = PTF(data[3 * i + 2]);
@@ -298,7 +302,6 @@ void laserMelt(unsigned char*data, uint8_t fType, uint32_t sX, uint32_t sY, bool
 
 		if (fType == VeraFilterSobel)
 		{
-
 			float sobelV = sobelVert(data, i, sX, sY);
 			float sobelH = sobelHorz(data, i, sX, sY);
 			filter = sqrt((sobelV * sobelV) + (sobelH * sobelH));
@@ -316,6 +319,8 @@ void laserMelt(unsigned char*data, uint8_t fType, uint32_t sX, uint32_t sY, bool
 			filter *= (filter >= 0.f);
 			filter *= 0.25; // or 0.0625 for better accuracy
 		}
+
+
 		if (!bColor)
 		{
 			result[i * 3 + 0] = FTP(filter);
@@ -332,4 +337,5 @@ void laserMelt(unsigned char*data, uint8_t fType, uint32_t sX, uint32_t sY, bool
 		}
 	}
 	memcpy(data, result, sX * sY * 3);
+	delete result;
 }
